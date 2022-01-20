@@ -8,14 +8,14 @@ const resource_url = "https://localhost:7007/api/Studente/";
 export const getAllStudenti = (): AppThunk => async (dispatch) =>{
     axios.get<Studente[]>(resource_url+"GetAll")
     .then(res=>dispatch(getAllSuccess(res.data)))
-    .catch(error=>dispatch(setMessage({cod:0,info: error})));
+    .catch(error=>dispatch(setMessage({cod:0,info: error.message})));
 }
 
 export const getSingleStudente = (cod_fiscale: string): AppThunk => async (dispatch) =>{
 
     axios.get<Studente>(resource_url+"GetSingle?cod_fiscale="+cod_fiscale)
     .then(res=>dispatch(getSingleSuccess(res.data)))
-    .catch(error=>dispatch(setMessage({cod:0,info: error})));
+    .catch(error=>dispatch(setMessage({cod:0,info: error.message})));
     
 }
 export const setSelectedUndefined =():AppThunk => async(dispatch) =>{
@@ -30,7 +30,7 @@ export const insertStudente = (studente: Studente): AppThunk =>async (dispatch) 
         }else{
             dispatch(setMessage({cod: res.data, info:"Errore durante l'inserimento"}));
         }
-    }).catch(error=>dispatch(setMessage({cod:0,info: error})));
+    }).catch(error=>dispatch(setMessage({cod:0,info: error.message})));
 }
 
 export const updateStudente = (studente: Studente): AppThunk =>async (dispatch) => {
@@ -43,7 +43,7 @@ export const updateStudente = (studente: Studente): AppThunk =>async (dispatch) 
             dispatch(setMessage({cod: res.data, info:"Errore durante la modifica"}));
         }
     }).catch(error=>{
-        dispatch(setMessage({cod:0,info: error}));
+        dispatch(setMessage({cod:0,info: error.message}));
     })
 }
 
@@ -57,7 +57,7 @@ export const deleteStudente = (cod_fiscale: string): AppThunk =>async (dispatch)
             dispatch(setMessage({cod: res.data, info:"Errore durante l'eliminazione"}));
         }
     }).catch(error=>{
-        dispatch(setMessage({cod:0,info: error}));
+        dispatch(setMessage({cod:0,info: error.message}));
     })
 }
 

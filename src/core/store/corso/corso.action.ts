@@ -10,13 +10,13 @@ const resource_url = "https://localhost:7007/api/Corso/";
 export const getAllCorsi = (): AppThunk => async (dispatch) =>{
     axios.get<Corso[]>(resource_url+"GetAll")
     .then(res=>dispatch(getAllSuccess(res.data)))
-    .catch(error=>dispatch(setMessage({cod:0,info: error})));
+    .catch(error=>dispatch(setMessage({cod:0,info: error.message})));
 }
 
 export const getSingleCorso = (id:number):AppThunk =>async (dispatch) => {
     axios.get<Corso | null>(resource_url+"GetSingle?id="+id)
     .then(res=> res.data ? dispatch(getSingleSuccess(res.data)): console.log("Non esiste nessun corso con quell'id"))
-    .catch(error=>dispatch(setMessage({cod:0,info: error})));
+    .catch(error=>dispatch(setMessage({cod:0,info: error.message})));
 }
 
 export const insertCorso = (corso: Corso): AppThunk =>async (dispatch) => {
@@ -29,7 +29,7 @@ export const insertCorso = (corso: Corso): AppThunk =>async (dispatch) => {
             dispatch(setMessage({cod: res.data, info:"Errore durante l'inserimento"}));
         }
     }).catch(error=>{
-        dispatch(setMessage({cod:0,info: error}));
+        dispatch(setMessage({cod:0,info: error.message}));
     })
 }
 
@@ -43,7 +43,7 @@ export const updateCorso = (corso: Corso): AppThunk =>async (dispatch) => {
             dispatch(setMessage({cod: res.data, info:"Errore durante la modifica"}));
         }
     }).catch(error=>{
-        dispatch(setMessage({cod:0,info: error}));
+        dispatch(setMessage({cod:0,info: error.message}));
     })
 }
 
@@ -57,7 +57,7 @@ export const deleteCorso = (id: number): AppThunk =>async (dispatch) => {
             dispatch(setMessage({cod: res.data, info:"Errore durante l'eliminazione"}));
         }
     }).catch(error=>{
-        dispatch(setMessage({cod:0,info: error}));
+        dispatch(setMessage({cod:0,info: error.message}));
     })
 }
 
@@ -71,7 +71,7 @@ export const setIsOver = (isOver: boolean, id:number): AppThunk =>async (dispatc
             dispatch(setMessage({cod: res.data, info:"Errore durante l'operazione"}));
         }
     }).catch(error=>{
-        dispatch(setMessage({cod:0,info: error}));
+        dispatch(setMessage({cod:0,info: error.message}));
     })
 }
 

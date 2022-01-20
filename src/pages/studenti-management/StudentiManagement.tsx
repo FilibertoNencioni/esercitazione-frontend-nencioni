@@ -122,7 +122,6 @@ const StudentiManagement = () =>{
 
     function onFilter(e:React.FormEvent<HTMLInputElement | HTMLTextAreaElement>){
         const value = (e.target as HTMLTextAreaElement).value.toLowerCase();
-        //filteredStudenti.splice(0, filteredStudenti.length);
         setFiteredStudenti(studenti.filter((item)=>item.nome.toLocaleLowerCase().includes(value) || item.cognome.toLocaleLowerCase().includes(value) || item.cod_fiscale.toLocaleLowerCase().includes(value)));
         console.log(studenti);
     };
@@ -164,7 +163,6 @@ const StudentiManagement = () =>{
             <div className="footer">
                 {message?.cod===0 && <MessageBar messageBarType={MessageBarType.error} dismissButtonAriaLabel="Close" onDismiss={()=>dispatch(resetMessage())}> {message.info} </MessageBar>}
                 {message?.cod===1 && <MessageBar messageBarType={MessageBarType.success} dismissButtonAriaLabel="Close" onDismiss={()=>dispatch(resetMessage())}> {message.info} </MessageBar>}
-
             </div>
         </div>
 

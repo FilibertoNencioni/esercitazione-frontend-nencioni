@@ -1,20 +1,20 @@
 import axios from "axios";
 import { AppThunk } from "../store";
 import { Frequenza } from "../../../models/frequenza";
-import { getAllSuccess, getSingleSuccess, setMessage, setLoading } from "../frequenza/frequenzaSlice";
+import { getAllSuccess, getSingleSuccess, setMessage, setLoading, setFiltered } from "../frequenza/frequenzaSlice";
 
 const resource_url = "https://localhost:7007/api/Frequenza/";
 
 export const getAllFrequenza = (): AppThunk => async (dispatch) =>{
     axios.get<Frequenza[]>(resource_url+"GetAll")
     .then(res=>dispatch(getAllSuccess(res.data)))
-    .catch(error=>dispatch(setMessage({cod:0,info: error})));
+    .catch(error=>dispatch(setMessage({cod:0,info: error.message})));
 }
 
 export const getSingleFrequenza = (id_c:number, cod_fiscale:string): AppThunk => async (dispatch) =>{
     axios.get<Frequenza>(resource_url+"GetSingle?id_c="+id_c+"&cod_fiscale="+cod_fiscale)
     .then(res=>dispatch(getSingleSuccess(res.data)))
-    .catch(error=>dispatch(setMessage({cod:0,info: error})));
+    .catch(error=>dispatch(setMessage({cod:0,info: error.message})));
 }
 
 export const insertFrequenza = (frequenza: Frequenza): AppThunk =>async (dispatch) => {
@@ -27,7 +27,7 @@ export const insertFrequenza = (frequenza: Frequenza): AppThunk =>async (dispatc
             dispatch(setMessage({cod: res.data, info:"Errore durante l'inserimento"}));
         }
     }).catch(error=>{
-        dispatch(setMessage({cod:0,info: error}));
+        dispatch(setMessage({cod:0,info: error.message}));
     })
 }
 
@@ -41,7 +41,7 @@ export const deleteFrequenza = (id_c:number, cod_fiscale:string): AppThunk =>asy
             dispatch(setMessage({cod: res.data, info:"Errore durante l'eliminazione"}));
         }
     }).catch(error=>{
-        dispatch(setMessage({cod:0,info: error}));
+        dispatch(setMessage({cod:0,info: error.message}));
     })
 }
 
@@ -70,4 +70,8 @@ export const getAttestato =(id_c: number, cod_fiscale:string):AppThunk => async(
       }).catch(()=>{
         dispatch(setMessage({cod:0,info:"Errore durante la creazione dell'attestato "}));
       }).finally(()=>dispatch(setLoading(false)));
+}
+
+export const setFilteredFrequenze = (frequenze:Frequenza[]): AppThunk =>async (dispatch) => {
+    dispatch(setFiltered(frequenze));
 }

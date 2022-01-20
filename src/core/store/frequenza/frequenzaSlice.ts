@@ -4,6 +4,7 @@ import { Message } from "../../../models/message";
 
 export interface FrequenzaSlice{
     frequenze: Frequenza[],
+    filteredFrequenze: Frequenza[],
     selectedFrequenza: Frequenza | undefined,
     message: Message | undefined,
     loading: boolean
@@ -11,6 +12,7 @@ export interface FrequenzaSlice{
 
 const initialState: FrequenzaSlice = {
     frequenze :[],
+    filteredFrequenze:[],
     selectedFrequenza: undefined,
     message: undefined,
     loading: false
@@ -31,8 +33,11 @@ export const frequenzaSlice = createSlice({
         },
         setLoading:(state, action:PayloadAction<boolean>)=>{
             state.loading = action.payload;
-        }
+        },
+        setFiltered:(state, action:PayloadAction<Frequenza[]>)=>{
+            state.filteredFrequenze = action.payload;
+        },
     },
 });
 
-export const {getAllSuccess, getSingleSuccess, setMessage, setLoading} = frequenzaSlice.actions;
+export const {getAllSuccess, getSingleSuccess, setMessage, setLoading, setFiltered} = frequenzaSlice.actions;

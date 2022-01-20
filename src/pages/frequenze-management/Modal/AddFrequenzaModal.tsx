@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {Modal, mergeStyleSets, getTheme,FontWeights, constructKeytip} from "@fluentui/react";
-import { AddFrequenzaForm } from "../../core/components/form/AddFrequenzaForm";
+import { AddFrequenzaForm } from "../../../core/components/form/AddFrequenzaForm";
 
 
 interface AddFrequenzaModalProps {

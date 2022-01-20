@@ -1,4 +1,4 @@
-import { combineReducers, configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
+import { combineReducers, configureStore, ThunkAction, Action, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { corsoSlice } from "./corso/corsoSlice";
 import { frequenzaSlice } from "./frequenza/frequenzaSlice";
 import { headerSlice } from "./header/headerSlice";
@@ -14,6 +14,7 @@ const rootReducer = combineReducers({
 })
 
 export const store =  configureStore({
+    middleware: (getDefaultMiddleware)=> getDefaultMiddleware(),
     reducer: rootReducer
 });
 

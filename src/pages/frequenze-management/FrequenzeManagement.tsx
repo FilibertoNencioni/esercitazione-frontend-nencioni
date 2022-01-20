@@ -4,15 +4,13 @@ import { RootState } from "../../core/store/store";
 import { useEffect, useState } from "react";
 import { Corso } from "../../models/corso";
 import { getAllCorsi, getSingleCorso } from "../../core/store/corso/corso.action";
-import { Icon } from '@fluentui/react/lib/Icon';
-import { convertToObject } from "typescript";
 import { confirmNotification } from "../../utils";
 import { Frequenza } from "../../models/frequenza";
-import { getAllFrequenza, getSingleFrequenza, resetMessage, setSelectedUndefined, deleteFrequenza, getAttestato } from "../../core/store/frequenza/frequenza.action";
+import { getAllFrequenza, getSingleFrequenza, resetMessage, setSelectedUndefined, deleteFrequenza, getAttestato, setFilteredFrequenze } from "../../core/store/frequenza/frequenza.action";
 import { getAllStudenti } from "../../core/store/studente/studente.action";
-import { AddFrequenzaModal } from "./AddFrequenzaModel";
+import { AddFrequenzaModal } from "./Modal/AddFrequenzaModal";
 import { setLoading } from "../../core/store/frequenza/frequenzaSlice";
-
+import { FilterFrequenzeModal } from "./Modal/FilterFrequenzeModal";
 
 const textfieldClass = mergeStyles({
     display: 'block',
@@ -23,6 +21,7 @@ const textFieldStyles: Partial<ITextFieldStyles> = { root: { maxWidth: '300px' }
 
 const FrequenzeManagement: React.FC = () =>{
     const [showAddModal, setShowAddModal] = useState(false);
+    const [showFilterModal, setShowFilterModal] = useState(false);
 
     const dispatch = useDispatch();
     const { frequenze } = useSelector((state: RootState)=>state.frequenza);
@@ -31,7 +30,9 @@ const FrequenzeManagement: React.FC = () =>{
     const { corsi } = useSelector((state: RootState)=>state.corso);
     const { message } = useSelector((state: RootState)=> state.frequenza);
     const { loading } = useSelector((state: RootState)=> state.frequenza);
-    const[filteredFrequenze, setFilteredFrequenze] = useState<Frequenza[]>(frequenze);
+    const { filteredFrequenze } = useSelector((state: RootState)=> state.frequenza);
+
+    //const[filteredFrequenze, setFilteredFrequenze] = useState<Frequenza[]>(frequenze);
     const _items: ICommandBarItemProps[] = [
         {
             key: 'newItem',
@@ -60,6 +61,19 @@ const FrequenzeManagement: React.FC = () =>{
                }) 
             })
         },
+        {
+            key:'filterItem',
+            text:'Filtra',
+            iconProps:{iconName:'filter'},
+            onClick:(()=>setShowFilterModal(true))
+        },
+        {
+            key:'resetFilterItem',
+            text:'Elimina filtri',
+            iconProps:{iconName:'ClearFilter'},
+            onClick:(()=>dispatch(setFilteredFrequenze(frequenze)))
+        },
+        
         
     ];
     const _farItems: ICommandBarItemProps[] = [
@@ -96,7 +110,7 @@ const FrequenzeManagement: React.FC = () =>{
     },[]);
 
     useEffect(()=>{
-        setFilteredFrequenze(frequenze);
+        dispatch(setFilteredFrequenze(frequenze));
     },[frequenze])
 
     const selection = new Selection({
@@ -122,11 +136,7 @@ const FrequenzeManagement: React.FC = () =>{
         }
     },[selectedFrequenza])
 
-    function onFilter(e:React.FormEvent<HTMLInputElement | HTMLTextAreaElement>){
-        const value = (e.target as HTMLTextAreaElement).value.toLowerCase();
-        console.log(value);
-        setFilteredFrequenze(frequenze.filter((item)=>(item.cod_fiscale.toLocaleLowerCase().includes(value) || item.id_c.toString().includes(value))));
-    };
+    
 
 
     return(
@@ -141,12 +151,7 @@ const FrequenzeManagement: React.FC = () =>{
             <div className="page-title">
                 <Text variant="xxLarge"> Frequenze </Text>
             </div>
-            <TextField
-                        className={textfieldClass}
-                        label="Filtra per codice fiscale o per ID corso"
-                        onChange={onFilter}
-                        styles={textFieldStyles}
-                        /> 
+            
                 <div className="card">
                         <div className="item-bar">
                             <CommandBar 
@@ -168,6 +173,7 @@ const FrequenzeManagement: React.FC = () =>{
                 />
 
                 <AddFrequenzaModal showModal={showAddModal} onCloseModal={()=>setShowAddModal(false)} />
+                <FilterFrequenzeModal showModal={showFilterModal} onCloseModal={()=>setShowFilterModal(false)} />
             </div>
             <div className="footer">
                 {message?.cod===0 && <MessageBar messageBarType={MessageBarType.error} dismissButtonAriaLabel="Close" onDismiss={()=>dispatch(resetMessage())}> {message.info} </MessageBar>}
