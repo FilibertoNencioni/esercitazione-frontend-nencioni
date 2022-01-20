@@ -32,7 +32,6 @@ const FrequenzeManagement: React.FC = () =>{
     const { loading } = useSelector((state: RootState)=> state.frequenza);
     const { filteredFrequenze } = useSelector((state: RootState)=> state.frequenza);
 
-    //const[filteredFrequenze, setFilteredFrequenze] = useState<Frequenza[]>(frequenze);
     const _items: ICommandBarItemProps[] = [
         {
             key: 'newItem',
