@@ -1,0 +1,21 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "1cdc919c-c709-4c2f-a252-a4812259d40b": {
+      "ProjectGuid": "1cdc919c-c709-4c2f-a252-a4812259d40b",
+      "DisplayName": "API_Esercitazione",
+      "ColorIndex": 0
+    },
+    "e95f661f-c5d5-43ab-9ab6-5b08897439ee": {
+      "ProjectGuid": "e95f661f-c5d5-43ab-9ab6-5b08897439ee",
+      "DisplayName": "Solution Items",
+      "ColorIndex": 1
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    }
+  },
+  "NextColorIndex": 2
+}
