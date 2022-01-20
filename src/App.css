@@ -1,0 +1,92 @@
+body {
+    background-color: rgba(225, 223, 221, 0.2);
+    min-height: 611px;
+    margin: 0;
+  }
+
+.app-container {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    grid-template-rows: 54px 1fr;
+    grid-template-areas: "header header" "sidenav main" ;
+    height: 100vh;
+  }
+  
+  .header {
+    grid-area: header;
+    background-color: #fff;
+    padding: 6px 0px 6px 10px;
+    display: flex;
+  }
+  
+  .main {
+    grid-area: main;
+    background-color: #faf9f8;
+    padding-left: 5%;
+    padding-right: 5%;
+    overflow: auto;
+  }
+  
+  
+  .side-nav {
+    grid-area: sidenav;
+    background-color: #fff;
+    padding: 25px;
+  }
+
+  .title {
+    padding: 0px 14px 0px 14px;
+    color: #737373;
+    margin: 6px 0px 6px 10px;
+    border-left: 1px solid darkgray;
+  }
+
+  .logo {
+    height: 44px;
+  }
+
+  .page-title {
+    padding-top:30px;
+    padding-bottom: 10px;
+  }
+
+  .card {
+    background: #fff;
+    padding: 28px;
+    border-radius: 2px;
+    background-clip: padding-box;
+  }
+
+  .item-bar{
+      width: 100%;
+  }
+
+  .footer{
+      position:absolute;
+      bottom: 0;
+      right:0;
+  }
+  .over-icons{
+      font-size: 1.1rem;
+  }
+
+  .loading{
+    position: absolute;
+    width: 70%;
+    height: 100% !important;
+    z-index: 10;
+  }
+
+  .loading-spinner{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+  }
+
+  .frequenze-container{
+    filter: blur(8px);
+  -webkit-filter: blur(8px);
+  }
