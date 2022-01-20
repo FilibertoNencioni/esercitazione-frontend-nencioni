@@ -1,16 +1,17 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Corso } from "../../../models/corso";
+import { Message } from "../../../models/message";
 
 export interface CorsoSlice{
     corsi: Corso[],
     selectedCorso: Corso | undefined,
-    state: number | undefined
+    message: Message | undefined
 }
 
 const initialState: CorsoSlice = {
     corsi : [],
     selectedCorso : undefined,
-    state: undefined
+    message: undefined
 }
 
 export const corsoSlice = createSlice({
@@ -23,9 +24,9 @@ export const corsoSlice = createSlice({
         getSingleSuccess: (state, action:PayloadAction<Corso | undefined>) =>{
             state.selectedCorso = action.payload;
         },
-        setState:(state, action:PayloadAction<number | undefined>)=>{
-            state.state = action.payload;
+        setMessage:(state, action:PayloadAction<Message | undefined>)=>{
+            state.message = action.payload;
         }
     },
 });
-export const {getAllSuccess, getSingleSuccess, setState} = corsoSlice.actions;
+export const {getAllSuccess, getSingleSuccess, setMessage} = corsoSlice.actions;

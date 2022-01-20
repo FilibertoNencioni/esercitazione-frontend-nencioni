@@ -1,17 +1,18 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Message } from "../../../models/message";
 import { Studente } from "../../../models/studente";
 
 export interface StudenteSlice{
     studenti: Studente[],
     selectedStudente: Studente | undefined,
-    state: number | undefined
+    message: Message | undefined
 }
 
 const initialState: StudenteSlice = {
     studenti : [],
     selectedStudente : undefined,
-    state: undefined, //1 = Good 
-                      //0 = Bad
+    message: undefined, //1 = Good 
+                        //0 = Bad
 }
 
 export const studenteSlice = createSlice({
@@ -24,10 +25,10 @@ export const studenteSlice = createSlice({
         getSingleSuccess: (state, action:PayloadAction<Studente | undefined>) =>{
             state.selectedStudente = action.payload;
         },
-        setState:(state, action:PayloadAction<number | undefined>)=>{
-            state.state = action.payload;
+        setMessage:(state, action:PayloadAction<Message | undefined>)=>{
+            state.message = action.payload;
         }
     },
 });
 
-export const {getAllSuccess, getSingleSuccess, setState} = studenteSlice.actions;
+export const {getAllSuccess, getSingleSuccess, setMessage} = studenteSlice.actions;

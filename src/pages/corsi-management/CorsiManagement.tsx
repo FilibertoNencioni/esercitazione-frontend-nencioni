@@ -3,7 +3,7 @@ import { Text, TextField, DetailsList, MessageBar, MessageBarType, mergeStyles, 
 import { RootState } from "../../core/store/store";
 import { useEffect, useState } from "react";
 import { Corso } from "../../models/corso";
-import { getAllCorsi, getSingleCorso, setSelectedUndefined, resetState, setIsOver, deleteCorso } from "../../core/store/corso/corso.action";
+import { getAllCorsi, getSingleCorso, setSelectedUndefined, resetMessage, setIsOver, deleteCorso } from "../../core/store/corso/corso.action";
 import { getAllDocente } from "../../core/store/docente/docente.action";
 import { Icon } from '@fluentui/react/lib/Icon';
 import { AddCorsoModal } from "./Modal/AddCorsoModal";
@@ -25,7 +25,7 @@ const CorsiManagement: React.FC = () =>{
     const dispatch = useDispatch();
     const { corsi } = useSelector((state: RootState)=>state.corso);
     const { selectedCorso } = useSelector((state: RootState)=>state.corso);
-    const { state } = useSelector((state: RootState)=> state.corso);
+    const { message } = useSelector((state: RootState)=> state.corso);
     const { docenti } = useSelector((state:RootState) => state.docente);
     const[filteredCorsi, setFiteredCorsi] = useState<Corso[]>(corsi);
     const _items: ICommandBarItemProps[] = [
@@ -176,8 +176,8 @@ const CorsiManagement: React.FC = () =>{
                 <UpdateCorsoModal showModal={showUpdateModal} onCloseModal={()=>setShowUpdateModal(false)} />
             </div>
             <div className="footer">
-                {state===0 && <MessageBar messageBarType={MessageBarType.error} dismissButtonAriaLabel="Close" onDismiss={()=>dispatch(resetState())}> Si è verificato un problema con il server </MessageBar>}
-                {state===1 && <MessageBar messageBarType={MessageBarType.success} dismissButtonAriaLabel="Close" onDismiss={()=>dispatch(resetState())}> Operazione completata con successo </MessageBar>}
+                {message?.cod===0 && <MessageBar messageBarType={MessageBarType.error} dismissButtonAriaLabel="Close" onDismiss={()=>dispatch(resetMessage())}> {message.info} </MessageBar>}
+                {message?.cod===1 && <MessageBar messageBarType={MessageBarType.success} dismissButtonAriaLabel="Close" onDismiss={()=>dispatch(resetMessage())}> {message.info} </MessageBar>}
 
             </div>
         </div>

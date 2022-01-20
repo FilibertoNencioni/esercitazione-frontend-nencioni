@@ -8,7 +8,7 @@ import { Icon } from '@fluentui/react/lib/Icon';
 import { convertToObject } from "typescript";
 import { confirmNotification } from "../../utils";
 import { Frequenza } from "../../models/frequenza";
-import { getAllFrequenza, getSingleFrequenza, resetState, setSelectedUndefined, deleteFrequenza, getAttestato } from "../../core/store/frequenza/frequenza.action";
+import { getAllFrequenza, getSingleFrequenza, resetMessage, setSelectedUndefined, deleteFrequenza, getAttestato } from "../../core/store/frequenza/frequenza.action";
 import { getAllStudenti } from "../../core/store/studente/studente.action";
 import { AddFrequenzaModal } from "./AddFrequenzaModel";
 import { setLoading } from "../../core/store/frequenza/frequenzaSlice";
@@ -29,7 +29,7 @@ const FrequenzeManagement: React.FC = () =>{
     const { selectedFrequenza } = useSelector((state: RootState)=>state.frequenza);
     const { studenti } = useSelector((state: RootState)=>state.studente);
     const { corsi } = useSelector((state: RootState)=>state.corso);
-    const { state } = useSelector((state: RootState)=> state.frequenza);
+    const { message } = useSelector((state: RootState)=> state.frequenza);
     const { loading } = useSelector((state: RootState)=> state.frequenza);
     const[filteredFrequenze, setFilteredFrequenze] = useState<Frequenza[]>(frequenze);
     const _items: ICommandBarItemProps[] = [
@@ -170,8 +170,8 @@ const FrequenzeManagement: React.FC = () =>{
                 <AddFrequenzaModal showModal={showAddModal} onCloseModal={()=>setShowAddModal(false)} />
             </div>
             <div className="footer">
-                {state===0 && <MessageBar messageBarType={MessageBarType.error} dismissButtonAriaLabel="Close" onDismiss={()=>dispatch(resetState())}> Si è verificato un problema con il server </MessageBar>}
-                {state===1 && <MessageBar messageBarType={MessageBarType.success} dismissButtonAriaLabel="Close" onDismiss={()=>dispatch(resetState())}> Operazione completata con successo </MessageBar>}
+                {message?.cod===0 && <MessageBar messageBarType={MessageBarType.error} dismissButtonAriaLabel="Close" onDismiss={()=>dispatch(resetMessage())}> {message.info} </MessageBar>}
+                {message?.cod===1 && <MessageBar messageBarType={MessageBarType.success} dismissButtonAriaLabel="Close" onDismiss={()=>dispatch(resetMessage())}> {message.info} </MessageBar>}
 
             </div>
             </div>
